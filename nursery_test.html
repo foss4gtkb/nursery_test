@@ -1,0 +1,50 @@
+<html>
+<head>
+  <title>NURSERY SPREADSHEET TEST</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="./css/leaflet.css" />
+  <script src="./js/leaflet.js"></script>
+  <script src="./js/tabletop.js"></script>
+
+<style type="text/css">
+#map{
+  width: 500px;
+  height: 500px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="map"></div>
+<script type="text/javascript">
+var map;
+var code = "1APrQ5sBaX8HZ2P6lfTIgrqeT88gU4LZy2GQkxZFBxQs"
+
+document.addEventListener('DOMContentLoaded',function(){
+  map = L.map('map').setView([36.077758,140.110931], 11);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+  
+  Tabletop.init({ 
+    key: code,
+    callback: function(sheet, tabletop){ 
+      for (var i in sheet){
+        var place = sheet[i];
+        L.marker([place.Y, place.X])
+          .addTo(map)
+          .bindPopup(place.label)
+      }
+    },
+    simpleSheet: true 
+  })
+  
+})
+</script>
+
+</body>
+
+</html>
