@@ -12,6 +12,15 @@
   width: 500px;
   height: 500px;
 }
+
+td.header {
+    vertical-align: top;
+    font-size:12px;
+}
+td.contents {
+    vertical-align: top;
+    font-size:12px;
+}
 </style>
 
 </head>
@@ -34,15 +43,37 @@ document.addEventListener('DOMContentLoaded',function(){
     callback: function(sheet, tabletop){ 
       for (var i in sheet){
         var place = sheet[i];
+        
+        // popup contents
+        contents ='<a href="' + place.url + '" target="_blank"><h3>' + place.label + '</h3></a>';
+        contents += '<table>';
+        contents += '        <td class="header">定員</td>';
+        contents += '        <td class="contents">' + place.capacity + '</td>';
+        contents += '    </tr>'; 
+        contents += '    <tr>';
+        contents += '        <td class="header">TEL</td>';
+        contents += '        <td class="contents">' + place.TEL + '</td>';
+        contents += '    </tr>';
+        contents += '    <tr>';
+        contents += '    <tr>';
+        contents += '        <td class="header">住所</td>';
+        contents += '        <td class="contents">' + place.address2 + '</td>';
+        contents += '    </tr>';
+        contents += '    <tr>';
+        contents += '</table>';
+        
         L.marker([place.Y, place.X])
           .addTo(map)
-          .bindPopup(place.label)
+          //.bindPopup(place.label)
+          .bindPopup(contents,{minWidth:150})
       }
     },
     simpleSheet: true 
   })
   
+  
 })
+
 </script>
 
 </body>
